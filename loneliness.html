@@ -25,6 +25,7 @@
         .result {
             margin-top: 20px;
             font-weight: bold;
+            color: red;
         }
         button {
             padding: 10px;
@@ -69,11 +70,20 @@
     <script>
         function calculateLoneliness() {
             let score = 0;
-            const form = document.getElementById("lonelinessForm");
-            const formData = new FormData(form);
+            let unanswered = false;
             
-            for (let value of formData.values()) {
-                score += parseInt(value);
+            for (let i = 1; i <= 3; i++) {
+                let selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected) {
+                    score += parseInt(selected.value);
+                } else {
+                    unanswered = true;
+                }
+            }
+            
+            if (unanswered) {
+                document.getElementById("result").innerHTML = "Please answer all questions before submitting.";
+                return;
             }
             
             let message = "";
