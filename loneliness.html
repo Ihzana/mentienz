@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loneliness Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+        .question {
+            margin: 10px 0;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Loneliness Test</h2>
+        <form id="lonelinessForm">
+            <div class="question">
+                <p>1. How often do you feel isolated from others?</p>
+                <input type="radio" name="q1" value="3"> Often<br>
+                <input type="radio" name="q1" value="2"> Sometimes<br>
+                <input type="radio" name="q1" value="1"> Rarely<br>
+            </div>
+            <div class="question">
+                <p>2. Do you have someone to talk to when feeling down?</p>
+                <input type="radio" name="q2" value="1"> Yes<br>
+                <input type="radio" name="q2" value="2"> Not always<br>
+                <input type="radio" name="q2" value="3"> No<br>
+            </div>
+            <div class="question">
+                <p>3. Do you feel lonely even when surrounded by people?</p>
+                <input type="radio" name="q3" value="3"> Yes, often<br>
+                <input type="radio" name="q3" value="2"> Sometimes<br>
+                <input type="radio" name="q3" value="1"> No<br>
+            </div>
+            <button type="button" onclick="calculateLoneliness()">Submit</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateLoneliness() {
+            let score = 0;
+            const form = document.getElementById("lonelinessForm");
+            const formData = new FormData(form);
+            
+            for (let value of formData.values()) {
+                score += parseInt(value);
+            }
+            
+            let message = "";
+            if (score >= 8) {
+                message = "High loneliness detected. Consider seeking support.";
+                message += "<br><button onclick='startSadnessTest()'>Take Sadness Test</button>";
+            } else if (score >= 5) {
+                message = "Moderate loneliness. Try engaging in social activities.";
+            } else {
+                message = "Low loneliness. Keep maintaining social connections!";
+            }
+            
+            document.getElementById("result").innerHTML = message;
+            localStorage.setItem("lonelinessScore", score);
+        }
+        
+        function startSadnessTest() {
+            alert("Redirecting to the Sadness Test...");
+            window.location.href = "sadness_test.html";
+        }
+    </script>
+</body>
+</html>
